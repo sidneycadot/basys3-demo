@@ -6,14 +6,15 @@ use xpm.vcomponents.all;
 
 entity synchronizer is
     port (
-        PORT_SRC_ASYNC : in std_logic;
-        PORT_DST_CLK   : in std_logic;
+        PORT_SRC_ASYNC : in  std_logic;
+        PORT_DST_CLK   : in  std_logic;
         PORT_DST_SYNC  : out std_logic
     );
 end entity synchronizer;
 
 
 architecture arch of synchronizer is
+
 begin
     
     xpm_cdc_single_instance : xpm_cdc_single

@@ -43,15 +43,11 @@ constant reset_state : StateType := (
         vga_hsync => '0'
     );
 
-type CombinatorialSignals is
-    record
+type CombinatorialSignals is record
         next_state : StateType;
     end record CombinatorialSignals;
 
-function UpdateCombinatorialSignals(
-            current_state : in StateType;
-            RESET         : in std_logic
-         ) return CombinatorialSignals is
+function UpdateCombinatorialSignals(current_state : in StateType; RESET : in std_logic) return CombinatorialSignals is
 
     type SyncPolarity is (NegativePolarity, PositivePolarity);
 
@@ -144,7 +140,7 @@ begin
                 combinatorial.next_state.y := 0;
             end if;
         end if;
-    
+
     end if;
 
     return combinatorial;
@@ -153,14 +149,10 @@ end function UpdateCombinatorialSignals;
 
 signal combinatorial : CombinatorialSignals;
 signal current_state : StateType := reset_state;
-signal next_state : StateType;
 
 begin
 
-    combinatorial <= UpdateCombinatorialSignals(
-            current_state,
-            PORT_RESET
-        );
+    combinatorial <= UpdateCombinatorialSignals(current_state, PORT_RESET);
 
     current_state <= combinatorial.next_state when rising_edge(CLK);
 

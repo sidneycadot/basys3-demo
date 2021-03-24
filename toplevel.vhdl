@@ -83,8 +83,8 @@ constant UART_DIVIDER : std_logic_vector(31 downto 0) := std_logic_vector(to_uns
 signal CLK_MAIN : std_logic; -- Clock for everything except VGA (60 MHz).
 signal CLK_VGA  : std_logic; -- Clock for 1920x1080p timing (148.5 MHz).
 
-signal RESET_MAIN : std_logic := '0';
-signal RESET_VGA  : std_logic := '0';
+signal RESET_MAIN : std_logic;
+signal RESET_VGA  : std_logic;
 
 -- Signals for connecting the seven-segment display to the seven-segment counter.
 signal D3, D2, D1, D0 : std_logic_vector(3 downto 0);
@@ -108,6 +108,20 @@ begin
             CLK_100MHz => XTAL_CLK,
             CLK_MAIN   => CLK_MAIN,
             CLK_VGA    => CLK_VGA
+        );
+
+    synchronize_reset_main :entity work.synchronizer
+        port map (
+            PORT_SRC_ASYNC => BTN_C_ASYNC,
+            PORT_DST_CLK   => CLK_MAIN,
+            PORT_DST_SYNC  => RESET_MAIN
+        );
+
+    synchronize_reset_vga :entity work.synchronizer
+        port map (
+            PORT_SRC_ASYNC => BTN_C_ASYNC,
+            PORT_DST_CLK   => CLK_VGA,
+            PORT_DST_SYNC  => RESET_VGA
         );
 
     LED <= SW_ASYNC xor ("00000000000" & BTN_C_ASYNC & BTN_U_ASYNC & BTN_L_ASYNC & BTN_R_ASYNC & BTN_D_ASYNC);

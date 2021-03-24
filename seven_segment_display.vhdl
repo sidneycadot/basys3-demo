@@ -46,8 +46,7 @@ constant reset_state : StateType := (
         seg_c        => "00000000" -- all off
     );
 
-type CombinatorialSignals is
-    record
+type CombinatorialSignals is record
         next_state : StateType;
     end record CombinatorialSignals;
 
@@ -140,7 +139,6 @@ end function UpdateCombinatorialSignals;
 
 signal combinatorial : CombinatorialSignals;
 signal current_state : StateType := reset_state;
-signal next_state : StateType;
 
 begin
 

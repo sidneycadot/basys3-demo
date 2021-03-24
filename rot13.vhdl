@@ -1,7 +1,8 @@
 
 library ieee;
 
-use ieee.std_logic_1164.all, ieee.numeric_std.all, ieee.math_real.all;
+use ieee.std_logic_1164.all,
+    ieee.numeric_std.all;
 
 entity rot13 is
     port (
@@ -36,7 +37,12 @@ type CombinatorialSignals is record
         next_state : StateType;
      end record CombinatorialSignals;
  
-function UpdateCombinatorialSignals(current_state: in StateType; RESET: in std_logic; BYTE_IN_VALID : in std_logic; BYTE_IN : in std_logic_vector(7 downto 0); BYTE_OUT_READY : in std_logic) return CombinatorialSignals is
+function UpdateCombinatorialSignals(
+            current_state  : in StateType;
+            RESET          : in std_logic;
+            BYTE_IN_VALID  : in std_logic;
+            BYTE_IN        : in std_logic_vector(7 downto 0);
+            BYTE_OUT_READY : in std_logic) return CombinatorialSignals is
 
 variable combinatorial : CombinatorialSignals;
 
@@ -76,7 +82,7 @@ end function UpdateCombinatorialSignals;
 signal current_state : StateType := reset_state;
 signal combinatorial : CombinatorialSignals;
 
-begin -- of architecture body.
+begin
 
     -- Update combinatorial signals continuously.
     combinatorial <= UpdateCombinatorialSignals(current_state, PORT_RESET, PORT_BYTE_IN_VALID, PORT_BYTE_IN, PORT_BYTE_OUT_READY);

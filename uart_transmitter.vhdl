@@ -22,8 +22,7 @@ architecture arch of uart_transmitter is
 
 type FsmState is (STARTBIT, B0, B1, B2, B3, B4, B5, B6, B7, STOPBIT);
 
-type StateType is
-    record
+type StateType is record
         st         : FsmState;
         counter    : unsigned(31 downto 0);
         data       : std_logic_vector(7 downto 0);
@@ -39,8 +38,7 @@ constant reset_state: StateType := (
         uart_tx    => '1'
     );
 
-type CombinatorialSignals is
-    record
+type CombinatorialSignals is record
         next_state : StateType;
     end record CombinatorialSignals;
 
@@ -52,8 +50,6 @@ variable combinatorial : CombinatorialSignals;
 
 begin
 
-    combinatorial := CombinatorialSignals'(next_state => current_state);
-
     if RESET = '1' then
         combinatorial.next_state := reset_state;
     else
@@ -63,7 +59,6 @@ begin
         if (combinatorial.next_state.data_ready and DATA_VALID) = '1' then
             combinatorial.next_state.data       := DATA;
             combinatorial.next_state.data_ready := '0';
-            report "accepting for output: " & to_hstring(DATA);
         end if;
 
         if combinatorial.next_state.counter = 0 then
@@ -93,9 +88,7 @@ begin
 end function UpdateCombinatorialSignals;
 
 signal current_state : StateType := reset_state;
-
 signal combinatorial : CombinatorialSignals;
-
 
 begin
 

@@ -8,7 +8,7 @@ entity uart_receiver is
         PORT_CLK        : in  std_logic;
         PORT_RESET      : in  std_logic;
         --
-        PORT_DIVIDER    : in std_logic_vector(31 downto 0);
+        PORT_DIVIDER    : in  std_logic_vector(31 downto 0);
         --
         PORT_DATA       : out std_logic_vector(7 downto 0);
         PORT_DATA_VALID : out std_logic;
@@ -22,8 +22,7 @@ architecture arch of uart_receiver is
 
 type FsmState is (B0, B1, B2, B3, B4, B5, B6, B7, STOP);
 
-type StateType is
-    record
+type StateType is record
         st         : FsmState;
         counter    : unsigned(31 downto 0);
         data       : std_logic_vector(7 downto 0);
@@ -37,8 +36,7 @@ constant reset_state: StateType := (
         data_valid => '0'
     );
 
-type CombinatorialSignals is
-    record
+type CombinatorialSignals is record
         next_state : StateType;
     end record CombinatorialSignals;
 
@@ -60,13 +58,11 @@ begin
     period_minus_one      := to_unsigned(to_integer(unsigned(PORT_DIVIDER))         - 1, 32);
     long_period_minus_one := to_unsigned(to_integer(unsigned(PORT_DIVIDER)) * 3 / 2 - 1, 32);
 
-    combinatorial := CombinatorialSignals'(
-        next_state => current_state
-    );
-
     if RESET = '1' then
         combinatorial.next_state := reset_state;
     else
+
+        combinatorial.next_state := current_state;
 
         if combinatorial.next_state.data_valid = '1' and DATA_READY = '1' then
             combinatorial.next_state.data  := "--------";
