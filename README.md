@@ -25,7 +25,8 @@ The following I/O devices are included:
   and 1 stop bit (8N1). Characters are accepted from the UART-RX side, subjected to ROT13 (i.e., all letters
   are shifted by 13 places), and echoed back to the UART-TX side.
 
-* The QSPI interface that connects to the onboard flash memory chip is not currently implemented.
+The following two I/O devices are not (yet) implemented:
 
-* The PS2 port that is driven by an on-board microcontroller that accepts a USB keyboard or mouse and mimics
-  a PS2 keyboard/mouse are not currently implemented.
+* The QSPI interface that connects to the onboard flash memory chip;
+
+* The PS/2 port that is driven by an on-board microcontroller that accepts a USB keyboard or mouse and mimics a PS/2 keyboard/mouse.
