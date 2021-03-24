@@ -50,13 +50,10 @@ function UpdateCombinatorialSignals(
 
 variable combinatorial: CombinatorialSignals;
 
-variable period_minus_one      : unsigned(31 downto 0);
-variable long_period_minus_one : unsigned(31 downto 0);
+constant period_minus_one      : unsigned(31 downto 0) := to_unsigned(to_integer(unsigned(DIVIDER))         - 1, 32);
+constant long_period_minus_one : unsigned(31 downto 0) := to_unsigned(to_integer(unsigned(DIVIDER)) * 3 / 2 - 1, 32);
 
 begin
-
-    period_minus_one      := to_unsigned(to_integer(unsigned(PORT_DIVIDER))         - 1, 32);
-    long_period_minus_one := to_unsigned(to_integer(unsigned(PORT_DIVIDER)) * 3 / 2 - 1, 32);
 
     if RESET = '1' then
         combinatorial.next_state := reset_state;

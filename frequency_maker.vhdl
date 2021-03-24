@@ -17,11 +17,12 @@ entity frequency_maker is
     );
 end entity frequency_maker;
 
+
 architecture arch of frequency_maker is
 
 subtype UnsignedCounterType is unsigned(num_counter_bits - 1 downto 0);
 
-pure function real_to_unsigned(x: in real) return UnsignedCounterType is
+function real_to_unsigned(x: in real) return UnsignedCounterType is
 -- This function rounds a real number to the nearest integer, then converts it into an UnsignedCounterType.
 -- We use this instead of something like to_unsigned(natural(round(x)), num_counter_bits) because the range of a real number exceeds the range of a natural.
 -- NOTE: in Vivado 2020, the assert statements are not triggered even if the assertion condition is false.

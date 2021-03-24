@@ -44,7 +44,7 @@ type CombinatorialSignals is record
 
 function UpdateCombinatorialSignals(current_state : in StateType; RESET : in std_logic; DATA_VALID : in std_logic; DATA : in std_logic_vector(7 downto 0); DIVIDER : in std_logic_vector(31 downto 0)) return CombinatorialSignals is
 
-constant period_minus_one : unsigned(31 downto 0) := to_unsigned(to_integer(unsigned(PORT_DIVIDER)) - 1, 32);
+constant period_minus_one : unsigned(31 downto 0) := to_unsigned(to_integer(unsigned(DIVIDER)) - 1, 32);
 
 variable combinatorial : CombinatorialSignals;
 
@@ -71,7 +71,8 @@ begin
                 when B4       => combinatorial.next_state.st := B5     ; combinatorial.next_state.counter := period_minus_one; combinatorial.next_state.uart_tx := combinatorial.next_state.data(5);
                 when B5       => combinatorial.next_state.st := B6     ; combinatorial.next_state.counter := period_minus_one; combinatorial.next_state.uart_tx := combinatorial.next_state.data(6);
                 when B6       => combinatorial.next_state.st := B7     ; combinatorial.next_state.counter := period_minus_one; combinatorial.next_state.uart_tx := combinatorial.next_state.data(7);
-                                                                    combinatorial.next_state.data := "--------"; combinatorial.next_state.data_ready := '1'; -- signal our willingness to accept new data.
+                                                                         combinatorial.next_state.data := "--------";
+                                                                         combinatorial.next_state.data_ready := '1'; -- signal our willingness to accept new data.
                 when B7       => combinatorial.next_state.st := STOPBIT; combinatorial.next_state.counter := period_minus_one; combinatorial.next_state.uart_tx := '1';
                 when STOPBIT  => if combinatorial.next_state.data_ready = '0' then
                                      combinatorial.next_state.st := STARTBIT; combinatorial.next_state.counter := period_minus_one; combinatorial.next_state.uart_tx := '0';

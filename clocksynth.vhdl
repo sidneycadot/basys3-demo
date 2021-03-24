@@ -19,7 +19,7 @@ signal MMCM_feedback_clock : std_logic;
 
 begin
 
-    -- Synthesize 148.5 MHz from 100 MHz, via 742.5 MHz VCO frequency.
+    -- Synthesize 148.5 MHz and 60 MHz clocks from 100 MHz, via 742.5 MHz VCO frequency.
     MMCM_VGA : MMCME2_BASE
         generic map (
             BANDWIDTH          => "OPTIMIZED",    -- Jitter programming (OPTIMIZED, HIGH, LOW)

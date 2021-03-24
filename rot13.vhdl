@@ -9,8 +9,8 @@ entity rot13 is
         CLK                 : in  std_logic;
         PORT_RESET          : in  std_logic;
         --
-        PORT_BYTE_IN        : in std_logic_vector(7 downto 0);
-        PORT_BYTE_IN_VALID  : in std_logic;
+        PORT_BYTE_IN        : in  std_logic_vector(7 downto 0);
+        PORT_BYTE_IN_VALID  : in  std_logic;
         PORT_BYTE_IN_READY  : out std_logic;
         --
         PORT_BYTE_OUT       : out std_logic_vector(7 downto 0);
